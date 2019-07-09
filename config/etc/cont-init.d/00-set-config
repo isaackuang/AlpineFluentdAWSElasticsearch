@@ -14,10 +14,12 @@ cat << EOF > /etc/fluentd/fluent.conf
   logstash_prefix \${tag}
   include_tag_key true
   tag_key \${tag}
-  flush_interval 1s
+  <buffer>
+    flush_interval 1s
+  </buffer>
 
   <endpoint>
-    url ${ELASTIC_SCHEME:=http}://${ELASTIC_HOST:=elasticsearch}
+    url ${ELASTIC_HOST:=elasticsearch}
     region ${ELASTIC_REGION:=ap-northeast-1}
   </endpoint>
 
