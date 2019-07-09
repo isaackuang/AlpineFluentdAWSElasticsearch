@@ -13,7 +13,7 @@ cat << EOF > /etc/fluentd/fluent.conf
   logstash_dateformat %Y-%m
   logstash_prefix \${tag}
   include_tag_key true
-  tag_key \${tag}
+  tag_key tag
   <buffer>
     flush_interval 1s
   </buffer>
