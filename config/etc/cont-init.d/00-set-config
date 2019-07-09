@@ -1,0 +1,26 @@
+#!/usr/bin/with-contenv sh
+
+cat << EOF > /etc/fluentd/fluent.conf
+<source>
+  @type  forward
+  @id   input
+  port  24224
+</source>
+
+<match **>
+  @type aws-elasticsearch-service
+  logstash_format true
+  logstash_dateformat %Y-%m
+  logstash_prefix \${tag}
+  include_tag_key true
+  tag_key \${tag}
+  flush_interval 1s
+
+  <endpoint>
+    url ${ELASTIC_SCHEME:=http}://${ELASTIC_HOST:=elasticsearch}
+    region ${ELASTIC_REGION:=ap-northeast-1}
+  </endpoint>
+
+</match>
+
+EOF
