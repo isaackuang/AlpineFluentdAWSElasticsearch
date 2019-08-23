@@ -15,7 +15,10 @@ cat << EOF > /etc/fluentd/fluent.conf
   include_tag_key true
   tag_key tag
   <buffer>
-    flush_interval 1s
+    @type file
+    flush_interval 60s
+    overflow_action drop_oldest_chunk
+    retry_timeout 1h
   </buffer>
 
   <endpoint>
